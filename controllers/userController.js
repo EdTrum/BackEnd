@@ -1,6 +1,6 @@
 
 exports.signup = async (req, res) => {
-    console.log('Signup invoked')
+    console.log(req.body)
 }
 
 exports.signin = async (req, res) => {
