@@ -24,6 +24,7 @@ const userSchema = new Schema({
         email: {type: String, lowercase: true},
         avatar: {type: String}
     },
+    createdAt: {type: Date, default: Date.now}
 })
 
 userSchema.pre('save', async function (next) {
