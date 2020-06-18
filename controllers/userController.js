@@ -15,6 +15,10 @@ const signToken = user => {
     }, JWT_SECRET)
 }
 
+exports.welcomePage = (req, res) => {
+    return res.status(200).json({message: 'Hello everyone'})
+}
+
 exports.signup = async (req, res) => {
     const {
         email,
@@ -59,6 +63,13 @@ exports.signin = async (req, res) => {
 
 exports.googleOAuth = async (req, res) => {
     //Generate token
+    const token = signToken(req.user)
+    res.status(200).json({
+        token
+    })
+}
+
+exports.facebookOAuth = async (req, res) => {
     const token = signToken(req.user)
     res.status(200).json({
         token

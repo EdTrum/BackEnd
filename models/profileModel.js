@@ -2,12 +2,10 @@ const mongoose = require('mongoose');
 // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
 // by default, you need to set it to false.
 
-
-const ProfileSchema = new mongoose.Schema({
-
+const profileSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'User'
     },
     name: {
         type: String
@@ -19,11 +17,12 @@ const ProfileSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
-    //This would be the categories the user is interested in.It should be pulled 
-    // form the user interest
-    Interest: {
+    //This would be the categories the user is interested in.It should be pulled
+    // from the user interest
+    interest: {
         type: [String],
-        required: true
+        required: true,
+        index: true,
     },
     bio: {
         type: String
@@ -34,4 +33,4 @@ const ProfileSchema = new mongoose.Schema({
     }
 });
 
-module.exports = Profile = mongoose.model('profile', ProfileSchema);
+module.exports = Profile = mongoose.model('Profile', profileSchema);
