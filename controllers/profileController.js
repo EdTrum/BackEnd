@@ -59,3 +59,18 @@ exports.editProfile = async (req, res) => {
         })
     }
 }
+
+exports.getUserProfile = async (req, res) => {
+    const userProfile = await Profile.findOne({user: req.user._id})
+    if (!userProfile) return res.status(404).json({general: 'Profile not found'})
+    return res.status(200).json(userProfile)
+}
+
+exports.deleteUserProfile = async (req, res) => {
+    const userProfile = await Profile.findOne({user: req.user._id})
+    console.log(userProfile)
+    userProfile.remove(err => {
+        if (err) return res.status(400).json({err})
+        return res.json({message: 'Profile deleted successfully'})
+    })
+}
