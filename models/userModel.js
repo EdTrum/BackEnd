@@ -10,9 +10,9 @@ const userSchema = new Schema({
         required: true
     },
     local: {
-        email: {type: String, lowercase: true, max: 255},
-        password: String,
-        avatar: String
+        email: {type: String, lowercase: true},
+        password: {type: String},
+        avatar: {type: String}
     },
     google: {
         id: {type: String},
@@ -24,6 +24,7 @@ const userSchema = new Schema({
         email: {type: String, lowercase: true},
         avatar: {type: String}
     },
+    role: {type: String, lowercase: true, default: 'user'},
     createdAt: {type: Date, default: Date.now}
 })
 
