@@ -10,6 +10,7 @@ const signToken = user => {
         iss: 'Edtrum',
         sub: user.id,
         email: user.email,
+        role: user.role,
         iat: new Date().getTime(),
         exp: new Date().setDate(new Date().getDate() + 7)
     }, JWT_SECRET)
@@ -20,10 +21,7 @@ exports.welcomePage = (req, res) => {
 }
 
 exports.signup = async (req, res) => {
-    const {
-        email,
-        password
-    } = req.value.body
+    const {email, password} = req.value.body
     //Check if user with the same email exists
     const foundUser = await User.findOne({
         'local.email': email
@@ -31,7 +29,6 @@ exports.signup = async (req, res) => {
     if (foundUser) return res.status(403).json({
         email: 'Already in use'
     })
-
     //Create a new User
     const newUser = new User({
         method: 'local',
