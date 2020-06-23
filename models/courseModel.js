@@ -6,15 +6,16 @@ const courseSchema = new Schema({
     category: {type: Schema.Types.ObjectId, ref: 'Category'},
     description: {type: String, required: true},
     avatar: {type: String, required: true},
-    link: {type: String, required: true},
+    courseLink: {type: String, required: true},
     rating: {type: Number, required: true},
     certification: {type: Boolean, required: true},
     fee: {type: Number, requires: true},
     duration: {type: Number, required: true},
     provider: {type: String, required: true,},
-    programmingLanguage: [
+    progLanguages: [
         {type: String}
-    ]
+    ],
+    createdAt: {type: Date, default: Date.now}
 })
 
 module.exports = Course = mongoose.model('Course', courseSchema)
