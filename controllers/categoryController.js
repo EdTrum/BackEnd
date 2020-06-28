@@ -73,11 +73,10 @@ exports.updateCategory = async (req, res) => {
 }
 
 exports.deleteCategory = async (req, res) => {
-    await Category.findOne({_id: req.params.categoryId}, (err, doc) => {
-        if (err) return res.status(500).json({general: 'Category not found'})
-        doc.remove(err => {
-            if (err) return res.status(400).json({err})
-            return res.json({general: 'Category deleted successfully'})
-        })
+    const category = await Category.findOne({_id: req.params.categoryId})
+    if (category === null) return res.status(500).json({general: 'Category not found'})
+    category.remove(err => {
+        if (err) return res.status(400).json({err})
+        return res.json({general: 'Category deleted successfully'})
     })
 }
