@@ -1,6 +1,6 @@
 const passport = require('passport')
 const JwtStrategy = require('passport-jwt').Strategy
-const { ExtractJwt } = require('passport-jwt')
+const {ExtractJwt} = require('passport-jwt')
 const LocalStrategy = require('passport-local').Strategy
 const GoogleTokenStrategy = require('passport-google-plus-token')
 const FacebookTokenStrategy = require('passport-facebook-token')
@@ -33,7 +33,7 @@ passport.use(new LocalStrategy({
 }, async (email, password, done) => {
     try {
         //Find the user with given email
-        const user = await User.findOne({ 'local.email': email })
+        const user = await User.findOne({'local.email': email})
         //If not handle occurrence
         if (!user) return done(null, false)
         //If user, check if password is correct
@@ -52,7 +52,7 @@ passport.use('googleToken', new GoogleTokenStrategy({
     clientSecret: GOOGLE_CLIENT_SECRET
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        const existingUser = await User.findOne({ "google.id": profile.id })
+        const existingUser = await User.findOne({"google.id": profile.id})
         if (existingUser) return done(null, existingUser)
         //Create new account
         const newUser = new User({
@@ -76,7 +76,7 @@ passport.use('facebookToken', new FacebookTokenStrategy({
     clientSecret: FACEBOOK_CLIENT_SECRET,
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        const existingUser = await User.findOne({ 'facebook.id': profile.id })
+        const existingUser = await User.findOne({'facebook.id': profile.id})
         if (existingUser) return done(null, existingUser)
 
         const newUser = new User({

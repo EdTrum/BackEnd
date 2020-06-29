@@ -28,6 +28,9 @@ if (process.env.NODE_ENV === 'development') {
 //Routes
 app.use('/api', require('./routes/userRoutes'))
 app.use('/api', require('./routes/profileRoutes'))
+app.use('/api', require('./routes/categoryRoutes'))
+app.use('/api', require('./routes/courseRoutes'))
+
 //Start the server
 const port = process.env.PORT || 8000
 app.listen(port)

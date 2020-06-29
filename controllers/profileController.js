@@ -68,7 +68,7 @@ exports.getUserProfile = async (req, res) => {
 
 exports.deleteUserProfile = async (req, res) => {
     const userProfile = await Profile.findOne({user: req.user._id})
-    console.log(userProfile)
+    if (userProfile === null) return res.status(500).json({general: 'Course not found'})
     userProfile.remove(err => {
         if (err) return res.status(400).json({err})
         return res.json({message: 'Profile deleted successfully'})
