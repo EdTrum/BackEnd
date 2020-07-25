@@ -1,9 +1,7 @@
 const User = require('../models/userModel')
 const Jwt = require('jsonwebtoken')
-const gravatar = require('gravatar');
-const {
-    JWT_SECRET
-} = require('../config')
+const gravatar = require('gravatar')
+const {JWT_SECRET} = require('../config')
 
 const signToken = user => {
     return Jwt.sign({
@@ -35,11 +33,7 @@ exports.signup = async (req, res) => {
         local: {
             email: email,
             password: password,
-            avatar: gravatar.url(email, {
-                s: '200',
-                r: 'pg',
-                d: 'mm'
-            })
+            avatar: gravatar.url(email, {s: '200', r: 'pg', d: 'mm'})
         }
     })
     await newUser.save()
@@ -48,6 +42,28 @@ exports.signup = async (req, res) => {
     const token = signToken(newUser)
     res.status(201).json({
         token
+    })
+}
+
+exports.seedAdmin = async (req, res) => {
+    const admin = new User({
+        method: 'local',
+        local: {
+            email: 'admin@admin.com',
+            password: 'password',
+            avatar: gravatar.url('admin@admin.com', {s: '200', r: 'pg', d: 'mm'})
+        },
+        role: 'admin'
+    })
+    const foundUser = await User.findOne({
+        'local.email': admin.local.email
+    })
+    if (foundUser) return res.status(403).json({
+        email: 'Already added'
+    })
+    await admin.save()
+    res.status(201).json({
+        message: 'Admin added'
     })
 }
 

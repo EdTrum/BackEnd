@@ -3,10 +3,13 @@ const passport = require('passport')
 
 const passportJwt = passport.authenticate('jwt', {session: false})
 
-const{editProfile, getUserProfile, deleteUserProfile} = require('../controllers/profileController')
+const{createProfile, getProfiles, getProfile, deleteProfile} = require('../controllers/profileController')
 
-router.post('/profile', passportJwt, editProfile)
-router.get('/profile/:userId', passportJwt, getUserProfile)
-router.delete('/profile/:userId/close-account', passportJwt, deleteUserProfile)
+router.route('/profiles')
+    .get(passportJwt, getProfiles)
+    .post(passportJwt, createProfile)
+router.route('/profiles/:id')
+    .get(passportJwt, getProfile)
+    .delete(passportJwt, deleteProfile)
 
 module.exports = router

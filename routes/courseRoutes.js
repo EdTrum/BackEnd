@@ -3,37 +3,19 @@ const passport = require('passport')
 
 const passportJwt = passport.authenticate('jwt', {session: false})
 const {
-    addCourse, getCoursesByCategoryId, getCourseById, getCourses, updateCourse, deleteCourse
+    addCourse, getCoursesByCatId, getCourse, getCourses, updateCourse, deleteCourse
 } = require('../controllers/courseController')
 
-/** GET fetch a list of courses
- *  Public route
- */
-router.get('/courses', getCourses)
+router.route('/courses')
+    .get(getCourses)
 
-/** GET fetch a course by courseId
- *  Public route
- */
-router.get('/courses/:courseId', getCourseById)
+router.route('/courses/category/:id')
+    .post(passportJwt, addCourse)
+    .get(getCoursesByCatId)
 
-/** GET fetch a list of courses based on categoryId
- *  Public route
- */
-router.get('/category/:categoryId/courses', getCoursesByCategoryId)
-
-/** POST Add a Course based on categoryId
- *  Private route and requires admin privileges
- */
-router.post('/categories/:categoryId/course', passportJwt, addCourse)
-
-/** UPDATE a Course
- *  Private route and requires admin privileges
- */
-router.put('/course/:courseId', passportJwt, updateCourse)
-
-/** DELETE a courses
- *  Private route and requires admin privileges
- */
-router.delete('/course/:courseId', passportJwt, deleteCourse)
+router.route('/courses/:id')
+    .get(getCourse)
+    .patch(passportJwt, updateCourse)
+    .delete(passportJwt, deleteCourse)
 
 module.exports = router

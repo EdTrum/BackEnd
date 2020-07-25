@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const courseSchema = new Schema({
     name: {type: String, required: true},
-    category: {type: Schema.Types.ObjectId, ref: 'Category'},
+    categoryId: {type: Schema.Types.ObjectId, ref: 'Category'},
     description: {type: String, required: true},
     avatar: {type: String, required: true},
     courseLink: {type: String, required: true},
