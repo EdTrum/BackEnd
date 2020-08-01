@@ -7,7 +7,7 @@ const passportConfig = require('../passport')
  */
 
 const {validateBody, schemas} = require('../helpers/inputValidators')
-const {signup, signin, googleOAuth, facebookOAuth, secrete, welcomePage, seedAdmin} = require('../controllers/userController')
+const {signup, signin, googleOAuth, facebookOAuth, secrete, welcomePage, seedAdmin, getUsers} = require('../controllers/userController')
 const passportSignIn = passport.authenticate('local', {session: false})
 const passportJwt = passport.authenticate('jwt', {session: false})
 const passportGoogle = passport.authenticate('googleToken', {session: false})
@@ -15,6 +15,7 @@ const passportFacebook = passport.authenticate('facebookToken', {session: false}
 
 router.get('/', welcomePage)
 router.get('/seed/admin',seedAdmin)
+router.get('/users', passportJwt, getUsers)
 
 router.post('/signup', validateBody(schemas.authSchema), signup)
 router.post('/signin', validateBody(schemas.authSchema), passportSignIn, signin)

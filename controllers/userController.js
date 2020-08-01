@@ -89,6 +89,17 @@ exports.facebookOAuth = async (req, res) => {
     })
 }
 
+exports.getUsers = async (req, res) => {
+    if (req.user.role === 'admin'){
+        const users = await User.find()
+        return res.status(200).json(users)
+    } else {
+        return res.status(400).json({
+            message: 'Unauthorized request'
+        })
+    }
+}
+
 exports.secrete = async (req, res) => {
     res.json({
         message: 'Accessing a secrete resource'
